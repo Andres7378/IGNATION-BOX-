@@ -16,16 +16,20 @@
 
     <style>
         :root {
-            /* Warmer Ember Color */
-            --ember: #FF5A1F; 
-            /* Richer Dark Background (Warm Charcoal) */
-            --charcoal: #0F0F11; 
-            --panel: #161618;
+            /* Warmer Ember Color Palette */
+            --ember: #FF5A1F;
+            --ember-glow: #ff8040;
+            --ember-dark: #c23b0a;
+            
+            /* Deep, Rich Dark Backgrounds */
+            --bg-deep: #08080A;
+            --bg-panel: #101012;
+            --bg-card: #161619;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--charcoal);
+            background-color: var(--bg-deep);
             color: #e5e7eb;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
@@ -35,7 +39,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Ambient Background Lighting */
+        /* Improved Ambient Lighting */
         .ambient-glow {
             position: fixed;
             top: 0;
@@ -45,61 +49,95 @@
             pointer-events: none;
             z-index: -1;
             background: 
-                radial-gradient(circle at 15% 50%, rgba(255, 90, 31, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(255, 140, 0, 0.02) 0%, transparent 50%);
+                radial-gradient(circle at 10% 20%, rgba(255, 90, 31, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 140, 0, 0.03) 0%, transparent 40%);
         }
 
-        /* Natural Button Styles */
+        /* Enhanced Button Styles */
         .btn-primary {
-            background: linear-gradient(to bottom right, #FF5A1F, #E04006);
+            background: linear-gradient(135deg, #FF5A1F 0%, #E04006 100%);
             color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(255, 90, 31, 0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(255, 90, 31, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
         }
         .btn-primary:hover {
-            filter: brightness(1.1);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(255, 90, 31, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 90, 31, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
         }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover::after { opacity: 1; }
 
-        /* Unified Card Styles */
+        /* Unified Card Styles with Depth */
         .plan-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .plan-card:hover {
-            border-color: rgba(255, 90, 31, 0.4);
-            transform: translateY(-5px);
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            border-color: rgba(255, 90, 31, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
+        }
+        
+        /* Specific Card Accents */
+        .plan-card.highlight {
+            border: 1px solid rgba(255, 90, 31, 0.3);
+            background: linear-gradient(180deg, rgba(255, 90, 31, 0.05) 0%, var(--bg-card) 100%);
         }
 
-        /* SVG Box Animation - Subtle Float */
+        /* SVG Box Animation */
         .mystery-box {
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-            transition: transform 0.6s ease;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .plan-card:hover .mystery-box {
-            transform: scale(1.05) translateY(-5px);
+            transform: scale(1.08) translateY(-8px) rotate(2deg);
         }
 
-        /* Smooth Anchor Scroll Offset */
-        html { scroll-padding-top: 100px; }
-        
-        /* Utility for text gradients */
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(to right, #fff, #bbb);
+        /* Section Dividers */
+        .section-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
         }
-        
+        .section-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .section-divider.top {
+            top: 0;
+            bottom: auto;
+            transform: none;
+        }
+
+        /* Text Gradients */
         .text-gradient-ember {
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(to right, #FF5A1F, #FF9E44);
+            background-image: linear-gradient(to right, #FF5A1F, #FFBC7D);
+        }
+
+        /* Pattern Overlay for Texture */
+        .bg-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
     </style>
 </head>
@@ -109,27 +147,26 @@
     <div class="ambient-glow"></div>
 
     <!-- NAVIGATION -->
-    <nav class="sticky top-0 z-50 bg-[#0F0F11]/80 backdrop-blur-lg border-b border-white/5 transition-all duration-300">
+    <nav class="sticky top-0 z-50 bg-[#08080A]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
         <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
             <!-- LOGO -->
             <a href="#top" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <!-- Using direct image link derived from the album ID -->
                 <img src="https://i.imgur.com/p7QhfOQ.png" alt="Ignation Box" class="h-10 md:h-12 w-auto object-contain brightness-110 contrast-125">
             </a>
 
             <!-- Desktop Nav -->
             <div class="hidden md:flex items-center gap-10 text-xs font-bold tracking-[0.15em] text-white/60 uppercase">
-                <a href="#boxes" class="hover:text-white transition-colors" data-i18n="nav.boxes">Cajas</a>
-                <a href="#how" class="hover:text-white transition-colors" data-i18n="nav.how">Proceso</a>
-                <a href="#faq" class="hover:text-white transition-colors" data-i18n="nav.faq">FAQ</a>
+                <a href="#boxes" class="hover:text-white hover:text-shadow-glow transition-all duration-300" data-i18n="nav.boxes">Cajas</a>
+                <a href="#how" class="hover:text-white hover:text-shadow-glow transition-all duration-300" data-i18n="nav.how">Proceso</a>
+                <a href="#faq" class="hover:text-white hover:text-shadow-glow transition-all duration-300" data-i18n="nav.faq">FAQ</a>
             </div>
 
             <!-- Actions -->
             <div class="flex items-center gap-5">
                 <!-- Language Toggle -->
-                <button id="lang-toggle-desktop" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5">
-                    <span class="text-lg leading-none">🇺🇸</span> 
-                    <span class="text-[10px] font-bold text-white/80 tracking-wide">EN</span>
+                <button id="lang-toggle-desktop" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group">
+                    <span class="text-lg leading-none filter grayscale group-hover:grayscale-0 transition-all">🇺🇸</span> 
+                    <span class="text-[10px] font-bold text-white/80 tracking-wide group-hover:text-white">EN</span>
                 </button>
 
                 <a href="#boxes" class="hidden md:inline-flex items-center justify-center rounded-sm px-8 py-3 btn-primary font-bold text-xs tracking-[0.15em] uppercase" data-i18n="nav.cta">
@@ -158,173 +195,220 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="top" class="relative py-28 md:py-40 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
-        
-        <!-- Hero Content -->
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-[10px] font-bold tracking-[0.2em] uppercase mb-8 backdrop-blur-sm">
-            <span class="w-1.5 h-1.5 rounded-full bg-ember"></span>
-            MYSTERY BOX ARTESANAL
-        </div>
-        
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight drop-shadow-2xl" data-i18n="hero.h1">
-            EL RITUAL <br>
-            <span class="text-gradient-ember">DEL FUEGO</span>
-        </h1>
-        
-        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light tracking-wide" data-i18n="hero.p">
-            No es solo una caja. Es tu arsenal mensual. Jerky de res premium, salsas que no encuentras en tiendas y herramientas para dominar la parrilla.
-        </p>
+    <section id="top" class="relative py-32 md:py-48 px-6 flex flex-col items-center justify-center text-center overflow-hidden bg-[#08080A]">
+        <!-- Background Effects -->
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-[#08080A] to-[#08080A] opacity-80"></div>
+        <div class="absolute inset-0 bg-pattern opacity-[0.15]"></div>
 
-        <div class="flex flex-col sm:flex-row gap-5 w-full max-w-sm mx-auto">
-            <a href="#boxes" class="w-full py-4 btn-primary rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center" data-i18n="hero.cta1">
-                Ver Colección
-            </a>
-            <button onclick="document.getElementById('how').scrollIntoView({behavior: 'smooth'})" class="w-full py-4 bg-transparent border border-white/20 hover:border-white/40 text-white rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center transition-all" data-i18n="nav.how">
-                Descubrir
-            </button>
+        <!-- Content -->
+        <div class="relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-[10px] font-bold tracking-[0.2em] uppercase mb-8 backdrop-blur-sm shadow-xl">
+                <span class="w-1.5 h-1.5 rounded-full bg-ember animate-pulse"></span>
+                MYSTERY BOX ARTESANAL
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight drop-shadow-2xl" data-i18n="hero.h1">
+                EL RITUAL <br>
+                <span class="text-gradient-ember">DEL FUEGO</span>
+            </h1>
+            
+            <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light tracking-wide" data-i18n="hero.p">
+                No es solo una caja. Es tu arsenal mensual. Jerky de res premium, salsas que no encuentras en tiendas y herramientas para dominar la parrilla.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-5 w-full max-w-sm mx-auto">
+                <a href="#boxes" class="w-full py-4 btn-primary rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center shadow-lg hover:shadow-orange-900/40" data-i18n="hero.cta1">
+                    Ver Colección
+                </a>
+                <button onclick="document.getElementById('how').scrollIntoView({behavior: 'smooth'})" class="w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center transition-all backdrop-blur-sm" data-i18n="nav.how">
+                    Descubrir
+                </button>
+            </div>
+
+            <!-- Subtle Trust Indicators -->
+            <div class="mt-24 flex flex-wrap justify-center gap-8 md:gap-16 opacity-60">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-full bg-white/5 border border-white/5">
+                        <i data-lucide="package-check" class="text-ember h-4 w-4"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Sin Contratos</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-full bg-white/5 border border-white/5">
+                        <i data-lucide="flame" class="text-ember h-4 w-4"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Curaduría Experta</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-full bg-white/5 border border-white/5">
+                        <i data-lucide="shield-check" class="text-ember h-4 w-4"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest">Envío Seguro</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Subtle Trust Indicators -->
-        <div class="mt-20 flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <div class="flex items-center gap-3">
-                <i data-lucide="package-check" class="text-ember h-5 w-5"></i>
-                <span class="text-[10px] font-bold uppercase tracking-widest">Sin Contratos</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <i data-lucide="flame" class="text-ember h-5 w-5"></i>
-                <span class="text-[10px] font-bold uppercase tracking-widest">Curaduría Experta</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <i data-lucide="shield-check" class="text-ember h-5 w-5"></i>
-                <span class="text-[10px] font-bold uppercase tracking-widest">Envío Seguro</span>
-            </div>
+        <!-- Decorative Bottom Shape -->
+        <div class="section-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#101012"></path>
+            </svg>
         </div>
     </section>
 
     <!-- PRICING / BOXES SECTION -->
-    <section id="boxes" class="py-24 px-6 relative">
-        <div class="max-w-7xl mx-auto">
+    <section id="boxes" class="py-24 px-6 relative bg-[#101012]">
+        <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-20">
-                <h2 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-4" data-i18n="pricing.title">Tu Nivel de Intensidad</h2>
-                <div class="w-16 h-1 bg-ember mx-auto rounded-full"></div>
+                <span class="text-ember font-bold tracking-[0.2em] text-[10px] uppercase mb-3 block">Elige tu arsenal</span>
+                <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6" data-i18n="pricing.title">Tu Nivel de Intensidad</h2>
+                <div class="flex justify-center items-center gap-2">
+                    <div class="h-px w-12 bg-white/10"></div>
+                    <div class="w-2 h-2 rounded-full bg-ember"></div>
+                    <div class="h-px w-12 bg-white/10"></div>
+                </div>
             </div>
 
-            <!-- UNIFIED GRID: No emphasis on center card via transform -->
+            <!-- UNIFIED GRID -->
             <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
                 
                 <!-- SPARK BOX -->
-                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group">
-                    <div class="mb-10 relative h-40 flex items-center justify-center">
-                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#F0F0F0" stroke="#DDD" stroke-width="1.5"/>
-                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#CCC" stroke-width="1.5"/>
-                            <path d="M50 85V50" stroke="#CCC" stroke-width="1.5"/>
-                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#333" text-anchor="middle">?</text>
-                        </svg>
-                        <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    </div>
-                    
-                    <div class="text-center mb-6">
-                        <h3 class="text-xl font-black text-white uppercase tracking-wide">Spark</h3>
-                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Iniciación</p>
-                    </div>
-                    
-                    <div class="flex justify-center items-baseline gap-1 mb-8">
-                        <span class="text-3xl font-bold text-white">$36</span>
-                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
-                    </div>
+                <div class="plan-card rounded-2xl p-1 flex flex-col relative overflow-hidden group">
+                    <div class="bg-[#161619] rounded-xl h-full p-8 flex flex-col">
+                        <div class="mb-10 relative h-40 flex items-center justify-center">
+                            <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#EAEAEA" stroke="#D4D4D4" stroke-width="1.5"/>
+                                <path d="M50 15V50M85 35L50 50L15 35" stroke="#BFBFBF" stroke-width="1.5"/>
+                                <path d="M50 85V50" stroke="#BFBFBF" stroke-width="1.5"/>
+                                <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#333" text-anchor="middle">?</text>
+                            </svg>
+                            <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                        
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-wide">Spark</h3>
+                            <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-[0.15em]">Nivel Iniciación</p>
+                        </div>
+                        
+                        <div class="flex justify-center items-baseline gap-1 mb-8">
+                            <span class="text-4xl font-black text-white">$36</span>
+                            <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                        </div>
 
-                    <ul class="space-y-4 mb-10 flex-1 px-2" id="spark-bullets">
-                        <!-- JS -->
-                    </ul>
+                        <div class="w-full h-px bg-white/5 mb-8"></div>
 
-                    <button onclick="window.open('https://buy.stripe.com/test_6oUdR2f5Rdqh7XUeuLaMU02', '_blank')" class="w-full py-3.5 bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors rounded-sm">
-                        Elegir Spark
-                    </button>
+                        <ul class="space-y-4 mb-10 flex-1 px-2" id="spark-bullets">
+                            <!-- JS -->
+                        </ul>
+
+                        <button onclick="window.open('https://buy.stripe.com/test_6oUdR2f5Rdqh7XUeuLaMU02', '_blank')" class="w-full py-4 bg-white text-black font-bold text-xs uppercase tracking-[0.15em] hover:bg-gray-200 transition-colors rounded-sm shadow-lg">
+                            Elegir Spark
+                        </button>
+                    </div>
                 </div>
 
-                <!-- FLAME BOX (Uniform Size) -->
-                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group border-ember/30">
-                    <!-- Badge inside card to keep uniformity -->
-                    <div class="absolute top-4 right-4 bg-ember/10 text-ember border border-ember/20 text-[9px] font-bold px-2 py-1 uppercase tracking-widest rounded-sm">Popular</div>
+                <!-- FLAME BOX (Highlighted) -->
+                <div class="plan-card highlight rounded-2xl p-1 flex flex-col relative overflow-hidden group">
+                    <!-- Popular Tag -->
+                    <div class="absolute top-0 right-0 bg-ember text-white text-[9px] font-bold px-3 py-1.5 uppercase tracking-widest rounded-bl-lg z-20 shadow-lg">Más Popular</div>
                     
-                    <div class="mb-10 relative h-40 flex items-center justify-center">
-                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#FF5A1F" stroke="#E04006" stroke-width="1.5"/>
-                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#FF8C60" stroke-width="1.5"/>
-                            <path d="M50 85V50" stroke="#FF8C60" stroke-width="1.5"/>
-                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="white" text-anchor="middle">?</text>
-                        </svg>
-                        <div class="absolute inset-0 bg-ember/10 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="bg-[#1A1614] rounded-xl h-full p-8 flex flex-col relative">
+                        <div class="mb-10 relative h-40 flex items-center justify-center">
+                            <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#FF5A1F" stroke="#E04006" stroke-width="1.5"/>
+                                <path d="M50 15V50M85 35L50 50L15 35" stroke="#FF8C60" stroke-width="1.5"/>
+                                <path d="M50 85V50" stroke="#FF8C60" stroke-width="1.5"/>
+                                <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="white" text-anchor="middle">?</text>
+                            </svg>
+                            <div class="absolute inset-0 bg-ember/10 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-black text-ember uppercase tracking-wide">Flame</h3>
+                            <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-[0.15em]">Experiencia Completa</p>
+                        </div>
+
+                        <div class="flex justify-center items-baseline gap-1 mb-8">
+                            <span class="text-4xl font-black text-white">$50</span>
+                            <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                        </div>
+
+                        <div class="w-full h-px bg-white/5 mb-8"></div>
+
+                        <ul class="space-y-4 mb-10 flex-1 px-2" id="flame-bullets">
+                            <!-- JS -->
+                        </ul>
+
+                        <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="w-full py-4 btn-primary font-bold text-xs uppercase tracking-[0.15em] rounded-sm shadow-xl hover:shadow-orange-500/20">
+                            Elegir Flame
+                        </button>
                     </div>
-
-                    <div class="text-center mb-6">
-                        <h3 class="text-xl font-black text-ember uppercase tracking-wide">Flame</h3>
-                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Experiencia Completa</p>
-                    </div>
-
-                    <div class="flex justify-center items-baseline gap-1 mb-8">
-                        <span class="text-3xl font-bold text-white">$50</span>
-                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
-                    </div>
-
-                    <ul class="space-y-4 mb-10 flex-1 px-2" id="flame-bullets">
-                        <!-- JS -->
-                    </ul>
-
-                    <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="w-full py-3.5 btn-primary font-bold text-xs uppercase tracking-widest rounded-sm shadow-lg">
-                        Elegir Flame
-                    </button>
                 </div>
 
                 <!-- LAVA BOX -->
-                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group">
-                    <div class="mb-10 relative h-40 flex items-center justify-center">
-                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#1A1A1A" stroke="#333" stroke-width="1.5"/>
-                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#333" stroke-width="1.5"/>
-                            <path d="M50 85V50" stroke="#333" stroke-width="1.5"/>
-                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#FF5A1F" text-anchor="middle">?</text>
-                        </svg>
-                        <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="plan-card rounded-2xl p-1 flex flex-col relative overflow-hidden group">
+                    <div class="bg-[#161619] rounded-xl h-full p-8 flex flex-col">
+                        <div class="mb-10 relative h-40 flex items-center justify-center">
+                            <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#1A1A1A" stroke="#333" stroke-width="1.5"/>
+                                <path d="M50 15V50M85 35L50 50L15 35" stroke="#333" stroke-width="1.5"/>
+                                <path d="M50 85V50" stroke="#333" stroke-width="1.5"/>
+                                <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#FF5A1F" text-anchor="middle">?</text>
+                            </svg>
+                            <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-black text-white uppercase tracking-wide">Lava</h3>
+                            <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-[0.15em]">Edición Limitada</p>
+                        </div>
+
+                        <div class="flex justify-center items-baseline gap-1 mb-8">
+                            <span class="text-4xl font-black text-white">$99</span>
+                            <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                        </div>
+
+                        <div class="w-full h-px bg-white/5 mb-8"></div>
+
+                        <ul class="space-y-4 mb-10 flex-1 px-2" id="lava-bullets">
+                            <!-- JS -->
+                        </ul>
+
+                        <button onclick="window.open('https://buy.stripe.com/test_6oU6oA5vhcmdguq2M3aMU00', '_blank')" class="w-full py-4 bg-transparent border border-white/10 hover:border-white/30 hover:bg-white/5 text-white font-bold text-xs uppercase tracking-[0.15em] transition-all rounded-sm">
+                            Elegir Lava
+                        </button>
                     </div>
-
-                    <div class="text-center mb-6">
-                        <h3 class="text-xl font-black text-white uppercase tracking-wide">Lava</h3>
-                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Edición Limitada</p>
-                    </div>
-
-                    <div class="flex justify-center items-baseline gap-1 mb-8">
-                        <span class="text-3xl font-bold text-white">$99</span>
-                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
-                    </div>
-
-                    <ul class="space-y-4 mb-10 flex-1 px-2" id="lava-bullets">
-                        <!-- JS -->
-                    </ul>
-
-                    <button onclick="window.open('https://buy.stripe.com/test_6oU6oA5vhcmdguq2M3aMU00', '_blank')" class="w-full py-3.5 bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-xs uppercase tracking-widest transition-all rounded-sm">
-                        Elegir Lava
-                    </button>
                 </div>
 
             </div>
         </div>
+        
+        <!-- Decorative Bottom Shape -->
+        <div class="section-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="#161619"></path>
+            </svg>
+        </div>
     </section>
 
-    <!-- HOW IT WORKS (Minimal) -->
-    <section id="how" class="py-24 px-6 border-t border-white/5 bg-[#0D0D0F]">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-2xl font-black text-white mb-16 uppercase tracking-widest text-center" data-i18n="how.title">El Proceso</h2>
+    <!-- HOW IT WORKS (Graphic/Industrial) -->
+    <section id="how" class="py-24 px-6 bg-[#161619] relative">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-20">
+                <span class="text-gray-500 font-bold tracking-[0.2em] text-[10px] uppercase mb-3 block">Simple y Directo</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white uppercase tracking-widest" data-i18n="how.title">El Proceso</h2>
+            </div>
             
-            <div class="grid md:grid-cols-3 gap-12 text-center relative">
-                <!-- Line Connector -->
-                <div class="hidden md:block absolute top-8 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+            <div class="grid md:grid-cols-3 gap-16 text-center relative">
+                <!-- Graphic Connector -->
+                <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                <div class="hidden md:block absolute top-12 left-[50%] -translate-x-1/2 w-4 h-4 rounded-full bg-[#161619] border-2 border-white/10 z-0"></div>
 
                 <!-- Step 1 -->
                 <div class="flex flex-col items-center group relative z-10">
-                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
-                        <i data-lucide="mouse-pointer-click" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    <div class="w-24 h-24 bg-[#1A1A1D] rounded-3xl rotate-3 flex items-center justify-center mb-8 border border-white/5 group-hover:border-ember/50 group-hover:rotate-6 transition-all duration-300 shadow-2xl relative">
+                        <div class="absolute -top-3 -right-3 bg-ember text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shadow-lg -rotate-3 text-sm">1</div>
+                        <i data-lucide="mouse-pointer-click" class="h-8 w-8 text-gray-400 group-hover:text-ember transition-colors -rotate-3"></i>
                     </div>
                     <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.0.t">Elige tu caja</h3>
                     <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.0.p">Spark, Flame o Lava. Tú decides la intensidad.</p>
@@ -332,8 +416,9 @@
 
                 <!-- Step 2 -->
                 <div class="flex flex-col items-center group relative z-10">
-                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
-                        <i data-lucide="truck" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    <div class="w-24 h-24 bg-[#1A1A1D] rounded-3xl -rotate-2 flex items-center justify-center mb-8 border border-white/5 group-hover:border-ember/50 group-hover:rotate-0 transition-all duration-300 shadow-2xl relative">
+                        <div class="absolute -top-3 -right-3 bg-ember text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shadow-lg rotate-2 text-sm">2</div>
+                        <i data-lucide="truck" class="h-8 w-8 text-gray-400 group-hover:text-ember transition-colors rotate-2"></i>
                     </div>
                     <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.1.t">Envío Rápido</h3>
                     <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.1.p">Directo a tu puerta, sin complicaciones.</p>
@@ -341,48 +426,58 @@
 
                 <!-- Step 3 -->
                 <div class="flex flex-col items-center group relative z-10">
-                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
-                        <i data-lucide="flame" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    <div class="w-24 h-24 bg-[#1A1A1D] rounded-3xl rotate-2 flex items-center justify-center mb-8 border border-white/5 group-hover:border-ember/50 group-hover:-rotate-2 transition-all duration-300 shadow-2xl relative">
+                        <div class="absolute -top-3 -right-3 bg-ember text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shadow-lg -rotate-2 text-sm">3</div>
+                        <i data-lucide="flame" class="h-8 w-8 text-gray-400 group-hover:text-ember transition-colors -rotate-2"></i>
                     </div>
                     <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.2.t">Enciende</h3>
                     <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.2.p">Descubre sabores únicos y mejora tu técnica.</p>
                 </div>
             </div>
         </div>
+        
+        <!-- Bottom Divider -->
+        <div class="section-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#101012"></path>
+            </svg>
+        </div>
     </section>
 
-    <!-- INCLUDES GRID (Clean) -->
-    <section class="py-20 px-6 border-t border-white/5 bg-[#0F0F11]">
-        <div class="max-w-4xl mx-auto">
-             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="includes-grid">
+    <!-- INCLUDES GRID (Clean with Background Pattern) -->
+    <section class="py-24 px-6 bg-[#101012] relative overflow-hidden">
+        <div class="absolute inset-0 bg-pattern opacity-[0.05]"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+             <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="includes-grid">
                 <!-- Populated by JS -->
              </div>
         </div>
     </section>
 
     <!-- FOOTER / EMAIL -->
-    <footer class="bg-[#050505] py-20 px-6 border-t border-white/5">
+    <footer class="bg-[#050505] py-24 px-6 border-t border-white/5 relative">
         <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-[0.2em]" data-i18n="email.title">Únete al Club</h3>
-            <p class="text-gray-500 mb-10 text-sm font-light">Recibe alertas de drops limitados y recetas exclusivas.</p>
+            <h3 class="text-2xl font-black text-white mb-6 uppercase tracking-[0.2em]" data-i18n="email.title">Únete al Club</h3>
+            <p class="text-gray-500 mb-10 text-sm font-light max-w-lg mx-auto">Recibe alertas de drops limitados y recetas exclusivas. Sin spam, solo fuego.</p>
             
-            <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-20">
-                <input type="email" id="email-input" placeholder="Tu email" class="flex-1 bg-[#161618] border border-white/10 text-white px-5 py-3 rounded-sm outline-none focus:border-ember transition-colors text-sm placeholder:text-gray-600">
-                <button id="email-btn" class="bg-white text-black px-8 py-3 font-bold text-xs uppercase tracking-widest rounded-sm hover:bg-gray-200 transition-colors">Enviar</button>
+            <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-24 relative">
+                <input type="email" id="email-input" placeholder="Tu email" class="flex-1 bg-[#161619] border border-white/10 text-white px-6 py-4 rounded-sm outline-none focus:border-ember transition-colors text-sm placeholder:text-gray-600 focus:ring-1 focus:ring-ember">
+                <button id="email-btn" class="bg-white text-black px-10 py-4 font-bold text-xs uppercase tracking-widest rounded-sm hover:bg-gray-200 transition-colors shadow-lg">Enviar</button>
             </div>
             <div id="email-success" class="hidden text-ember font-bold mb-8 text-sm tracking-widest">¡REGISTRADO!</div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/5 pt-10">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/5 pt-12">
                 <div class="opacity-40 hover:opacity-100 transition-opacity">
                     <!-- Footer Logo -->
                     <img src="https://i.imgur.com/p7QhfOQ.png" alt="Logo" class="h-6 w-auto grayscale">
                 </div>
-                <div class="flex gap-8 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+                <div class="flex gap-10 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
                     <a href="#" class="hover:text-white transition-colors" data-i18n="legal.terms">Términos</a>
                     <a href="#" class="hover:text-white transition-colors" data-i18n="legal.privacy">Privacidad</a>
+                    <a href="#" class="hover:text-white transition-colors">Contacto</a>
                 </div>
                 <div class="text-[10px] text-gray-700 font-mono">
-                    EST. 2026
+                    EST. 2026 • LUBBOCK, TX
                 </div>
             </div>
         </div>
@@ -478,7 +573,7 @@
             // Bullets
             const renderBullets = (id, bullets) => {
                 document.getElementById(id).innerHTML = bullets.map(b => `
-                    <li class="flex items-start gap-3 text-[13px] text-gray-400 font-light">
+                    <li class="flex items-start gap-3 text-[13px] text-gray-400 font-medium">
                         <i data-lucide="check" class="h-4 w-4 text-ember shrink-0 mt-0.5"></i>
                         <span>${b}</span>
                     </li>
@@ -491,15 +586,17 @@
             // Includes Grid
             const includesGrid = document.getElementById('includes-grid');
             includesGrid.innerHTML = t.includes.cols.map(col => `
-                <div class="bg-[#161618] border border-white/5 p-5 rounded-sm text-center flex flex-col items-center justify-center gap-3 hover:border-white/10 transition-colors">
-                    <i data-lucide="${col.icon}" class="h-5 w-5 text-ember opacity-80"></i>
-                    <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest">${col.t}</span>
+                <div class="bg-[#1A1A1D] border border-white/5 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-4 hover:border-white/10 hover:bg-[#202023] transition-all group cursor-default shadow-lg">
+                    <div class="p-3 bg-white/5 rounded-full group-hover:bg-ember/10 transition-colors">
+                        <i data-lucide="${col.icon}" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    </div>
+                    <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest group-hover:text-white">${col.t}</span>
                 </div>
             `).join('');
 
             // Buttons
             const desktopBtn = document.getElementById('lang-toggle-desktop');
-            desktopBtn.innerHTML = `<span class="text-lg leading-none">${t.langBtn.flag}</span><span class="text-[10px] font-bold text-white/80 tracking-wide">${t.langBtn.text.split(' ')[2] || 'EN'}</span>`;
+            desktopBtn.innerHTML = `<span class="text-lg leading-none filter grayscale hover:grayscale-0 transition-all">${t.langBtn.flag}</span><span class="text-[10px] font-bold text-white/80 tracking-wide">${t.langBtn.text.split(' ')[2] || 'EN'}</span>`;
             
             const mobileBtn = document.getElementById('lang-toggle-mobile');
             mobileBtn.innerHTML = `<span class="text-xl">${t.langBtn.flag}</span><span class="text-xs font-bold text-white tracking-widest">${t.langBtn.mobile}</span>`;
