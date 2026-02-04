@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ignation Box - Mystery BBQ Drop</title>
+    <title>Ignation Box - The Monthly Fire Ritual</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,838 +11,515 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Custom Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Montserrat (Modern Titles) & Inter (Clean Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --ember: #FF4D1A;
-            --ember2: #FF7A18;
-            --charcoal: #0B0F14;
-            --graphite: #121824;
-            --smoke: #E9EEF5;
-            --ash: #A9B4C2;
-            --white: #FFFFFF;
+            /* Warmer Ember Color */
+            --ember: #FF5A1F; 
+            /* Richer Dark Background (Warm Charcoal) */
+            --charcoal: #0F0F11; 
+            --panel: #161618;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--charcoal);
-            color: white;
+            color: #e5e7eb;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* Animation Utilities */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
+        h1, h2, h3, .brand-font {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Ambient Background Lighting */
+        .ambient-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 90, 31, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(255, 140, 0, 0.02) 0%, transparent 50%);
+        }
+
+        /* Natural Button Styles */
+        .btn-primary {
+            background: linear-gradient(to bottom right, #FF5A1F, #E04006);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 90, 31, 0.25);
+        }
+        .btn-primary:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px rgba(255, 90, 31, 0.4);
+        }
+
+        /* Unified Card Styles */
+        .plan-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .plan-card:hover {
+            border-color: rgba(255, 90, 31, 0.4);
+            transform: translateY(-5px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        /* SVG Box Animation - Subtle Float */
+        .mystery-box {
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+            transition: transform 0.6s ease;
+        }
+        .plan-card:hover .mystery-box {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        /* Smooth Anchor Scroll Offset */
+        html { scroll-padding-top: 100px; }
+        
+        /* Utility for text gradients */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #fff, #bbb);
         }
         
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0B0F14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FF4D1A;
-        }
-        
-        /* Smooth anchor offset for sticky header */
-        section {
-            scroll-margin-top: 100px;
+        .text-gradient-ember {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #FF5A1F, #FF9E44);
         }
     </style>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ember: 'var(--ember)',
-                        ember2: 'var(--ember2)',
-                        charcoal: 'var(--charcoal)',
-                        graphite: 'var(--graphite)',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="selection:bg-ember selection:text-white min-h-screen flex flex-col">
 
+    <!-- Ambient Background -->
+    <div class="ambient-glow"></div>
+
     <!-- NAVIGATION -->
-    <nav class="sticky top-0 z-50 backdrop-blur-md bg-[rgba(11,15,20,0.85)] border-b border-white/10">
-        <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-            <a href="#top" class="flex items-center gap-2 group">
-                <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-ember to-ember2 flex items-center justify-center shadow-lg shadow-orange-900/30 group-hover:scale-105 transition-transform">
-                    <i data-lucide="flame" class="h-5 w-5 text-white fill-current"></i>
-                </div>
-                <div class="leading-tight">
-                    <div class="text-sm text-white font-bold tracking-wide">Ignation Box</div>
-                </div>
+    <nav class="sticky top-0 z-50 bg-[#0F0F11]/80 backdrop-blur-lg border-b border-white/5 transition-all duration-300">
+        <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+            <!-- LOGO -->
+            <a href="#top" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <img src="ChatGPT Image Feb 3, 2026, 03_38_19 PM.png" alt="Ignation Box" class="h-10 md:h-12 w-auto object-contain brightness-110 contrast-125">
             </a>
 
             <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-white/70">
-                <a href="#boxes" class="hover:text-ember transition-colors" data-i18n="nav.boxes">Cajas</a>
-                <a href="#how" class="hover:text-ember transition-colors" data-i18n="nav.how">Cómo funciona</a>
-                <a href="#includes" class="hover:text-ember transition-colors" data-i18n="nav.what">Qué incluye</a>
-                <a href="#faq" class="hover:text-ember transition-colors" data-i18n="nav.faq">FAQ</a>
+            <div class="hidden md:flex items-center gap-10 text-xs font-bold tracking-[0.15em] text-white/60 uppercase">
+                <a href="#boxes" class="hover:text-white transition-colors" data-i18n="nav.boxes">Cajas</a>
+                <a href="#how" class="hover:text-white transition-colors" data-i18n="nav.how">Proceso</a>
+                <a href="#faq" class="hover:text-white transition-colors" data-i18n="nav.faq">FAQ</a>
             </div>
 
-            <div class="flex items-center gap-2">
-                <button id="lang-toggle-desktop" class="hidden md:inline-flex items-center justify-center rounded-lg text-xs font-medium h-8 px-3 bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-colors">
-                    EN
+            <!-- Actions -->
+            <div class="flex items-center gap-5">
+                <!-- Language Toggle -->
+                <button id="lang-toggle-desktop" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5">
+                    <span class="text-lg leading-none">🇺🇸</span> 
+                    <span class="text-[10px] font-bold text-white/80 tracking-wide">EN</span>
                 </button>
-                <a href="#boxes" class="hidden md:inline-flex items-center justify-center rounded-lg text-sm font-semibold h-10 px-4 bg-ember hover:bg-ember2 text-white shadow-lg shadow-orange-900/20 transition-colors" data-i18n="nav.cta">
-                    Comprar
+
+                <a href="#boxes" class="hidden md:inline-flex items-center justify-center rounded-sm px-8 py-3 btn-primary font-bold text-xs tracking-[0.15em] uppercase" data-i18n="nav.cta">
+                    Suscríbeme
                 </a>
 
-                <!-- Mobile Menu Toggle -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-white/80 hover:text-white transition-colors">
                     <i data-lucide="menu" class="h-6 w-6"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden border-b border-white/10 bg-[#0B0F14] overflow-hidden transition-all duration-300">
-            <div class="px-4 py-4 flex flex-col gap-4 text-sm">
-                <a href="#boxes" class="text-left text-white/80 py-2 border-b border-white/5 mobile-link" data-i18n="nav.boxes">Cajas</a>
-                <a href="#how" class="text-left text-white/80 py-2 border-b border-white/5 mobile-link" data-i18n="nav.how">Cómo funciona</a>
-                <a href="#includes" class="text-left text-white/80 py-2 border-b border-white/5 mobile-link" data-i18n="nav.what">Qué incluye</a>
-                <a href="#faq" class="text-left text-white/80 py-2 border-b border-white/5 mobile-link" data-i18n="nav.faq">FAQ</a>
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-white/60">Language / Idioma</span>
-                    <button id="lang-toggle-mobile" class="inline-flex items-center justify-center rounded-lg text-xs font-medium h-8 px-3 bg-white/5 text-white border border-white/10 hover:bg-white/10">
-                        Cambiar a Inglés
-                    </button>
-                </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-white/5 bg-[#0F0F11]">
+            <div class="px-6 py-8 flex flex-col gap-6 text-center">
+                <a href="#boxes" class="mobile-link text-white font-bold tracking-widest text-sm" data-i18n="nav.boxes">CAJAS</a>
+                <a href="#how" class="mobile-link text-white font-bold tracking-widest text-sm" data-i18n="nav.how">PROCESO</a>
+                <a href="#faq" class="mobile-link text-white font-bold tracking-widest text-sm" data-i18n="nav.faq">FAQ</a>
+                <button id="lang-toggle-mobile" class="mx-auto flex items-center gap-3 px-5 py-2 bg-white/5 rounded-full mt-4">
+                    <span class="text-xl">🇺🇸</span>
+                    <span class="text-xs font-bold text-white tracking-widest">ENGLISH</span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section id="top" class="relative overflow-hidden pt-14 pb-16">
-        <!-- Background FX -->
-        <div class="absolute inset-0 opacity-40 pointer-events-none">
-            <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-ember blur-[120px] mix-blend-screen opacity-40 animate-pulse"></div>
-            <div class="absolute top-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-orange-600 blur-[100px] mix-blend-screen opacity-30"></div>
+    <!-- HERO SECTION -->
+    <section id="top" class="relative py-28 md:py-40 px-6 flex flex-col items-center justify-center text-center overflow-hidden">
+        
+        <!-- Hero Content -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-[10px] font-bold tracking-[0.2em] uppercase mb-8 backdrop-blur-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-ember"></span>
+            MYSTERY BOX ARTESANAL
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight drop-shadow-2xl" data-i18n="hero.h1">
+            EL RITUAL <br>
+            <span class="text-gradient-ember">DEL FUEGO</span>
+        </h1>
+        
+        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-light tracking-wide" data-i18n="hero.p">
+            No es solo una caja. Es tu arsenal mensual. Jerky de res premium, salsas que no encuentras en tiendas y herramientas para dominar la parrilla.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-5 w-full max-w-sm mx-auto">
+            <a href="#boxes" class="w-full py-4 btn-primary rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center" data-i18n="hero.cta1">
+                Ver Colección
+            </a>
+            <button onclick="document.getElementById('how').scrollIntoView({behavior: 'smooth'})" class="w-full py-4 bg-transparent border border-white/20 hover:border-white/40 text-white rounded-sm font-bold text-xs tracking-[0.15em] uppercase text-center transition-all" data-i18n="nav.how">
+                Descubrir
+            </button>
         </div>
 
-        <div class="mx-auto max-w-6xl px-4 relative z-10">
-            <div class="grid md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-7 reveal active">
-                    <div class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-xs font-medium text-ember2 mb-6">
-                        <i data-lucide="globe" class="h-3.5 w-3.5"></i>
-                        <span class="text-white/90" data-i18n="hero.kicker">Mystery box mensual para asadores</span>
-                    </div>
-
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]" data-i18n="hero.h1">
-                        La sorpresa que te da ganas de prender el fuego.
-                    </h1>
-                    <p class="mt-6 text-lg text-white/75 max-w-xl leading-relaxed" data-i18n="hero.p">
-                        Cada mes llega una caja curada con carne seca premium, selecciones sorpresa y tips prácticos para cocinar mejor—sin complicar operaciones ni romper la magia.
-                    </p>
-
-                    <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="#boxes" class="inline-flex items-center justify-center rounded-lg h-12 px-8 text-base font-semibold bg-ember hover:bg-ember2 text-white shadow-lg shadow-orange-900/40 transition-colors">
-                            <span data-i18n="hero.cta1">Ver cajas</span>
-                            <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
-                        </a>
-                        <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="inline-flex items-center justify-center rounded-lg h-12 px-6 bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors" data-i18n="hero.cta2">
-                            Comprar ahora
-                        </button>
-                    </div>
-
-                    <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl">
-                        <div class="flex items-center gap-2 text-sm text-white/60">
-                            <i data-lucide="shield-check" class="h-4 w-4 text-ember"></i>
-                            <span data-i18n="hero.trust.0">Pagos seguros</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-sm text-white/60">
-                            <i data-lucide="shield-check" class="h-4 w-4 text-ember"></i>
-                            <span data-i18n="hero.trust.1">Envío internacional</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-sm text-white/60">
-                            <i data-lucide="shield-check" class="h-4 w-4 text-ember"></i>
-                            <span data-i18n="hero.trust.2">Sorpresa real</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:col-span-5 relative reveal delay-200">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-ember to-transparent opacity-10 blur-2xl -z-10 rounded-full"></div>
-                    
-                    <!-- Hero Card -->
-                    <div class="rounded-[28px] border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-3 shadow-2xl backdrop-blur-sm transform hover:-translate-y-1 transition-transform duration-300">
-                        <div class="rounded-2xl bg-[#0F131A] border border-white/5 p-5 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10 mb-4">
-                                <div>
-                                    <div class="text-white font-bold text-lg" data-i18n="card.title">Unboxing del mes</div>
-                                    <div class="text-xs text-ember2 font-medium tracking-wide">MYSTERY • JERKY • TIPS</div>
-                                </div>
-                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-ember/20 text-ember2 border-ember/30" data-i18n="card.badge">Sorpresa</div>
-                            </div>
-
-                            <!-- SVG Illustration -->
-                            <div class="rounded-xl overflow-hidden border border-white/10 bg-black/40 relative group cursor-default">
-                                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10 pointer-events-none"></div>
-                                <svg viewBox="0 0 900 520" class="w-full h-auto transform group-hover:scale-105 transition-transform duration-700">
-                                    <defs>
-                                        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                                            <stop offset="0" stopColor="#FF4D1A" stopOpacity="0.9" />
-                                            <stop offset="0.6" stopColor="#FF7A18" stopOpacity="0.35" />
-                                            <stop offset="1" stopColor="#0B0F14" stopOpacity="1" />
-                                        </linearGradient>
-                                        <radialGradient id="g2" cx="45%" cy="35%" r="60%">
-                                            <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.1" />
-                                            <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-                                        </radialGradient>
-                                    </defs>
-                                    <rect width="900" height="520" fill="#0B0F14" />
-                                    <rect width="900" height="520" fill="url(#g2)" />
-                                    <!-- Box Object -->
-                                    <g transform="translate(120 160)">
-                                        <path d="M40 70 L230 0 L440 70 L250 150 Z" fill="url(#g1)" opacity="0.9" />
-                                        <path d="M40 70 L250 150 L250 330 L40 250 Z" fill="#161C26" />
-                                        <path d="M440 70 L250 150 L250 330 L440 250 Z" fill="#0F131A" />
-                                        <path d="M40 70 L230 0 L440 70" stroke="#FF7A18" strokeOpacity="0.4" strokeWidth="2" fill="none" />
-                                        <text x="250" y="130" textAnchor="middle" fill="#FFFFFF" fontSize="28" fontWeight="bold" letterSpacing="2" fontFamily="sans-serif">IGNATION</text>
-                                    </g>
-                                    <!-- Meat/Jerky Object -->
-                                    <g transform="translate(580 200)">
-                                        <path d="M40 40 C80 10, 130 20, 160 55 C190 95, 160 130, 115 140 C70 150, 25 120, 20 85 C15 60, 25 52, 40 40 Z" fill="#753020" />
-                                        <path d="M60 62 C90 45, 118 52, 140 75" stroke="#A65D45" strokeWidth="6" strokeLinecap="round" opacity="0.6" />
-                                        <path d="M55 95 C85 88, 110 95, 135 110" stroke="#A65D45" strokeWidth="6" strokeLinecap="round" opacity="0.5" />
-                                    </g>
-                                </svg>
-                            </div>
-
-                            <div class="mt-4 grid grid-cols-2 gap-2" id="hero-features">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Value Props Strip -->
-            <div class="mt-20 grid md:grid-cols-3 gap-6">
-                <!-- S1 -->
-                <div class="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/[0.07] transition-colors reveal">
-                    <h3 class="font-semibold leading-none tracking-tight text-lg flex items-center gap-2 mb-2">
-                        <i data-lucide="box" class="h-5 w-5 text-ember"></i>
-                        <span data-i18n="strips.s1.t">100% sorpresa</span>
-                    </h3>
-                    <p class="text-sm text-white/60" data-i18n="strips.s1.p">No revelamos el contenido. Tú eliges el nivel de fuego.</p>
-                </div>
-                <!-- S2 -->
-                <div class="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/[0.07] transition-colors reveal delay-100">
-                    <h3 class="font-semibold leading-none tracking-tight text-lg flex items-center gap-2 mb-2">
-                        <i data-lucide="sparkles" class="h-5 w-5 text-ember"></i>
-                        <span data-i18n="strips.s2.t">Tips incluidos</span>
-                    </h3>
-                    <p class="text-sm text-white/60" data-i18n="strips.s2.p">Consejos cortos y útiles para mejorar en cada asado.</p>
-                </div>
-                <!-- S3 -->
-                <div class="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/[0.07] transition-colors reveal delay-200">
-                    <h3 class="font-semibold leading-none tracking-tight text-lg flex items-center gap-2 mb-2">
-                        <i data-lucide="truck" class="h-5 w-5 text-ember"></i>
-                        <span data-i18n="strips.s3.t">Fácil de repetir</span>
-                    </h3>
-                    <p class="text-sm text-white/60" data-i18n="strips.s3.p">Formato estándar: simple de armar, simple de enviar.</p>
-                </div>
-            </div>
-
-            <div class="mt-12 flex items-center justify-center animate-bounce">
-                <a href="#boxes" class="text-white/40 hover:text-white flex flex-col items-center gap-2 text-sm transition-colors">
-                    <span data-i18n="hero.see_boxes">Ver cajas</span>
-                    <i data-lucide="chevron-down" class="h-4 w-4"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING -->
-    <section id="boxes" class="mx-auto max-w-6xl px-4 py-20">
-        <div class="flex flex-col md:flex-row items-end justify-between gap-6 mb-10 reveal">
-            <div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="pricing.title">Elige tu nivel de fuego</h2>
-                <p class="mt-3 text-white/60 text-lg max-w-2xl" data-i18n="pricing.subtitle">Misma estructura. Más valor conforme subes de nivel.</p>
-            </div>
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                <i data-lucide="badge-check" class="h-4 w-4 text-green-500"></i>
-                <span class="text-xs text-white/60 font-mono tracking-wide" data-i18n="pricing.note">Links de compra en modo TEST.</span>
-            </div>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            <!-- Spark Box -->
-            <div class="reveal rounded-xl border border-white/10 bg-[#131820] text-white overflow-hidden relative h-full flex flex-col hover:border-white/20 transition-colors">
-                <div class="p-6 pb-4">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="h-12 w-12 rounded-xl flex items-center justify-center border bg-white/5 border-white/10 text-white/80">
-                                <i data-lucide="sparkles" class="h-6 w-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold">Spark Box</h3>
-                                <div class="text-xs text-white/50 uppercase tracking-wider font-semibold mt-0.5">Mystery Drop</div>
-                            </div>
-                        </div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white/5 text-white/70 border-white/10" data-i18n="pricing.best">Mejor entrada</div>
-                    </div>
-                    <div class="mt-6 flex items-baseline gap-1">
-                        <span class="text-4xl font-bold tracking-tight">$36</span>
-                        <span class="text-white/60 font-medium">USD</span>
-                    </div>
-                    <p class="text-white/70 mt-3 text-base leading-snug" data-i18n="plans.spark.vibe">La entrada al juego. Sorpresa fácil, rica y sin complicarte.</p>
-                </div>
-                <div class="p-6 pt-0 flex-1 flex flex-col">
-                    <div class="rounded-xl overflow-hidden border border-white/10 bg-black/40 mb-6 relative h-24">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                        <!-- Mini visual placeholder -->
-                        <div class="absolute inset-0 flex items-center justify-center text-[100px] font-bold text-white/5 select-none">S</div>
-                        <div class="absolute bottom-2 left-3 z-20 text-[10px] font-mono text-white/50 uppercase">Box v.Current</div>
-                    </div>
-                    <div class="space-y-3 mb-8 flex-1" id="spark-bullets">
-                        <!-- Populated by JS -->
-                    </div>
-                    <button onclick="window.open('https://buy.stripe.com/test_6oUdR2f5Rdqh7XUeuLaMU02', '_blank')" class="w-full inline-flex items-center justify-center rounded-lg font-medium h-10 px-4 bg-ember hover:bg-ember2 text-white shadow-lg transition-colors" data-i18n="pricing.buy">
-                        Comprar
-                    </button>
-                </div>
-            </div>
-
-            <!-- Flame Box (Popular) -->
-            <div class="reveal delay-100 rounded-xl border border-ember bg-[#131820] text-white overflow-hidden relative h-full flex flex-col ring-1 ring-ember shadow-[0_0_30px_-10px_rgba(255,77,26,0.3)]">
-                <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-ember to-ember2"></div>
-                <div class="p-6 pb-4">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="h-12 w-12 rounded-xl flex items-center justify-center border bg-ember/10 border-ember/20 text-ember">
-                                <i data-lucide="flame" class="h-6 w-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold">Flame Box</h3>
-                                <div class="text-xs text-white/50 uppercase tracking-wider font-semibold mt-0.5">Mystery Drop</div>
-                            </div>
-                        </div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-ember text-white border-ember" data-i18n="pricing.popular">Más popular</div>
-                    </div>
-                    <div class="mt-6 flex items-baseline gap-1">
-                        <span class="text-4xl font-bold tracking-tight">$50</span>
-                        <span class="text-white/60 font-medium">USD</span>
-                    </div>
-                    <p class="text-white/70 mt-3 text-base leading-snug" data-i18n="plans.flame.vibe">Más variedad. Mejor selección. El nivel que se siente mes a mes.</p>
-                </div>
-                <div class="p-6 pt-0 flex-1 flex flex-col">
-                    <div class="rounded-xl overflow-hidden border border-white/10 bg-black/40 mb-6 relative h-24">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-[100px] font-bold text-ember/10 select-none">F</div>
-                        <div class="absolute bottom-2 left-3 z-20 text-[10px] font-mono text-white/50 uppercase">Box v.Current</div>
-                    </div>
-                    <div class="space-y-3 mb-8 flex-1" id="flame-bullets">
-                        <!-- Populated by JS -->
-                    </div>
-                    <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="w-full inline-flex items-center justify-center rounded-lg font-medium h-10 px-4 bg-ember hover:bg-ember2 text-white shadow-lg transition-colors" data-i18n="pricing.buy">
-                        Comprar
-                    </button>
-                </div>
-            </div>
-
-            <!-- Lava Box -->
-            <div class="reveal delay-200 rounded-xl border border-white/10 bg-[#131820] text-white overflow-hidden relative h-full flex flex-col hover:border-white/20 transition-colors">
-                <div class="p-6 pb-4">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="h-12 w-12 rounded-xl flex items-center justify-center border bg-white/5 border-white/10 text-white/80">
-                                <i data-lucide="box" class="h-6 w-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold">Lava Box</h3>
-                                <div class="text-xs text-white/50 uppercase tracking-wider font-semibold mt-0.5">Mystery Drop</div>
-                            </div>
-                        </div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-white/5 text-white/70 border-white/10" data-i18n="pricing.premium">Premium</div>
-                    </div>
-                    <div class="mt-6 flex items-baseline gap-1">
-                        <span class="text-4xl font-bold tracking-tight">$99.99</span>
-                        <span class="text-white/60 font-medium">USD</span>
-                    </div>
-                    <p class="text-white/70 mt-3 text-base leading-snug" data-i18n="plans.lava.vibe">Edición premium. Menos explicación, más impacto.</p>
-                </div>
-                <div class="p-6 pt-0 flex-1 flex flex-col">
-                    <div class="rounded-xl overflow-hidden border border-white/10 bg-black/40 mb-6 relative h-24">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-[100px] font-bold text-red-600/10 select-none">L</div>
-                        <div class="absolute bottom-2 left-3 z-20 text-[10px] font-mono text-white/50 uppercase">Box v.Current</div>
-                    </div>
-                    <div class="space-y-3 mb-8 flex-1" id="lava-bullets">
-                        <!-- Populated by JS -->
-                    </div>
-                    <button onclick="window.open('https://buy.stripe.com/test_6oU6oA5vhcmdguq2M3aMU00', '_blank')" class="w-full inline-flex items-center justify-center rounded-lg font-medium h-10 px-4 bg-ember hover:bg-ember2 text-white shadow-lg transition-colors" data-i18n="pricing.buy">
-                        Comprar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section id="how" class="mx-auto max-w-6xl px-4 py-20">
-        <div class="mb-12 reveal">
-            <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="how.title">Cómo funciona</h2>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8 relative">
-            <!-- Connecting line (desktop) -->
-            <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-ember/30 to-transparent"></div>
-
-            <!-- Step 1 -->
-            <div class="relative reveal delay-100">
-                <div class="h-24 w-24 rounded-2xl bg-[#1A1F26] border border-white/10 flex items-center justify-center mb-6 relative z-10 mx-auto md:mx-0 shadow-xl">
-                    <div class="absolute -top-3 -right-3 bg-ember text-white text-xs font-bold h-7 w-7 rounded-full flex items-center justify-center ring-4 ring-[#0B0F14]">1</div>
-                    <i data-lucide="box" class="h-10 w-10 text-white/80"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left" data-i18n="how.steps.0.t">Elige tu caja</h3>
-                <p class="text-white/60 leading-relaxed text-center md:text-left" data-i18n="how.steps.0.p">Spark, Flame o Lava. Tú decides qué tan intensa quieres la sorpresa.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="relative reveal delay-200">
-                <div class="h-24 w-24 rounded-2xl bg-[#1A1F26] border border-white/10 flex items-center justify-center mb-6 relative z-10 mx-auto md:mx-0 shadow-xl">
-                    <div class="absolute -top-3 -right-3 bg-ember text-white text-xs font-bold h-7 w-7 rounded-full flex items-center justify-center ring-4 ring-[#0B0F14]">2</div>
-                    <i data-lucide="truck" class="h-10 w-10 text-white/80"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left" data-i18n="how.steps.1.t">Recíbela</h3>
-                <p class="text-white/60 leading-relaxed text-center md:text-left" data-i18n="how.steps.1.p">Empacada para enviar fácil y llegar sin complicaciones.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="relative reveal delay-300">
-                <div class="h-24 w-24 rounded-2xl bg-[#1A1F26] border border-white/10 flex items-center justify-center mb-6 relative z-10 mx-auto md:mx-0 shadow-xl">
-                    <div class="absolute -top-3 -right-3 bg-ember text-white text-xs font-bold h-7 w-7 rounded-full flex items-center justify-center ring-4 ring-[#0B0F14]">3</div>
-                    <i data-lucide="flame" class="h-10 w-10 text-white/80"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3 text-center md:text-left" data-i18n="how.steps.2.t">Cocina y presume</h3>
-                <p class="text-white/60 leading-relaxed text-center md:text-left" data-i18n="how.steps.2.p">Aplica los tips, prende el fuego y comparte tu resultado.</p>
-            </div>
-        </div>
-
-        <!-- Gift CTA -->
-        <div class="mt-16 reveal">
-            <div class="rounded-xl border border-ember/20 bg-gradient-to-br from-ember/10 to-transparent p-8 md:p-10 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-32 bg-ember blur-[100px] opacity-10 rounded-full pointer-events-none"></div>
-                <div class="grid md:grid-cols-[1.5fr,2fr] gap-8 items-center relative z-10">
-                    <div>
-                        <div class="inline-flex items-center gap-2 text-ember2 font-semibold text-sm mb-2 uppercase tracking-wide">
-                            <i data-lucide="gift" class="h-4 w-4"></i>
-                            <span data-i18n="gift.label">Regalo Perfecto</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-semibold mb-3 tracking-tight text-white" data-i18n="gift.title">¿Buscas un regalo único?</h3>
-                        <p class="text-white/70 text-base" data-i18n="gift.desc">Elige una caja y compra en 1 click. La sorpresa queda perfecta para cualquier asador.</p>
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-3 justify-end">
-                        <button onclick="window.open('https://buy.stripe.com/test_6oUdR2f5Rdqh7XUeuLaMU02', '_blank')" class="h-12 px-6 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors" data-i18n="gift.spark">Regalar Spark ($36)</button>
-                        <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="h-12 px-6 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors" data-i18n="gift.flame">Regalar Flame ($50)</button>
-                        <button onclick="window.open('https://buy.stripe.com/test_6oU6oA5vhcmdguq2M3aMU00', '_blank')" class="h-12 px-6 rounded-lg bg-ember hover:bg-ember2 text-white shadow-lg transition-colors" data-i18n="gift.lava">Regalar Lava ($99)</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INCLUDES -->
-    <section id="includes" class="bg-white/5 border-y border-white/5">
-        <div class="mx-auto max-w-6xl px-4 py-20">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" data-i18n="includes.title">Qué incluye cada caja</h2>
-                <p class="text-lg text-white/60" data-i18n="includes.subtitle">Sin perecederos. Sin estrés logístico. Solo experiencia curada.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6" id="includes-grid">
-                <!-- Populated by JS -->
-            </div>
-
-            <div class="mt-8 rounded-2xl border border-white/10 bg-[#0F131A] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 reveal">
-                <div>
-                    <div class="text-white font-semibold text-lg flex items-center gap-2">
-                        <i data-lucide="truck" class="h-5 w-5 text-ember"></i>
-                        <span data-i18n="includes.std.title">Estándar operativo</span>
-                    </div>
-                    <div class="mt-1 text-white/60 max-w-xl" data-i18n="includes.std.desc">Mismo formato siempre. Cambia la selección, no la logística.</div>
-                </div>
-                <div class="flex flex-wrap gap-3">
-                    <div class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-white/80">
-                        <i data-lucide="check" class="h-3.5 w-3.5 text-ember"></i>
-                        <span data-i18n="includes.tag1">No perecederos</span>
-                    </div>
-                    <div class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-white/80">
-                        <i data-lucide="check" class="h-3.5 w-3.5 text-ember"></i>
-                        <span data-i18n="includes.tag2">Ligero</span>
-                    </div>
-                    <div class="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2 text-sm text-white/80">
-                        <i data-lucide="check" class="h-3.5 w-3.5 text-ember"></i>
-                        <span data-i18n="includes.tag3">Fácil de empacar</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="mx-auto max-w-6xl px-4 py-20">
-        <h2 class="text-3xl font-bold text-white mb-8 reveal" data-i18n="faq.title">Preguntas frecuentes</h2>
-        <div class="grid md:grid-cols-2 gap-6" id="faq-grid">
-            <!-- Populated by JS -->
-        </div>
-    </section>
-
-    <!-- EMAIL CAPTURE -->
-    <section class="mx-auto max-w-6xl px-4 py-12 reveal">
-        <div class="rounded-xl border border-white/10 bg-[#131820] text-white overflow-hidden relative">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-            <div class="p-8 md:p-12 relative z-10 text-center">
-                <div class="max-w-2xl mx-auto">
-                    <h3 class="text-2xl md:text-3xl font-bold mb-3" data-i18n="email.title">Recibe el drop</h3>
-                    <p class="text-white/60 mb-8" data-i18n="email.p">Te avisamos cuando haya nuevo drop y ediciones limitadas.</p>
-                    
-                    <div id="email-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                        <input type="email" id="email-input" placeholder="Tu email" class="flex h-12 w-full rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-ember transition-all">
-                        <button id="email-btn" class="inline-flex items-center justify-center rounded-lg h-12 px-8 font-semibold bg-ember hover:bg-ember2 text-white transition-colors" data-i18n="email.cta">
-                            Unirme
-                        </button>
-                    </div>
-
-                    <div id="email-success" class="hidden bg-green-500/10 border border-green-500/20 text-green-400 py-3 px-6 rounded-lg inline-flex items-center gap-2 animate-[pulse_0.5s]">
-                        <i data-lucide="check" class="h-5 w-5"></i>
-                        <span class="font-semibold" data-i18n="email.success">¡Listo! Te avisaremos.</span>
-                    </div>
-
-                    <div class="mt-4 text-xs text-white/40 flex items-center justify-center gap-1">
-                        <i data-lucide="shield-check" class="h-3 w-3"></i>
-                        <span data-i18n="email.note">Sin spam.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 bg-[#080a0e] pt-12 pb-24 md:pb-12 mt-auto">
-        <div class="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        <!-- Subtle Trust Indicators -->
+        <div class="mt-20 flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
             <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center">
-                    <i data-lucide="flame" class="h-6 w-6 text-ember"></i>
+                <i data-lucide="package-check" class="text-ember h-5 w-5"></i>
+                <span class="text-[10px] font-bold uppercase tracking-widest">Sin Contratos</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <i data-lucide="flame" class="text-ember h-5 w-5"></i>
+                <span class="text-[10px] font-bold uppercase tracking-widest">Curaduría Experta</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <i data-lucide="shield-check" class="text-ember h-5 w-5"></i>
+                <span class="text-[10px] font-bold uppercase tracking-widest">Envío Seguro</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING / BOXES SECTION -->
+    <section id="boxes" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-4" data-i18n="pricing.title">Tu Nivel de Intensidad</h2>
+                <div class="w-16 h-1 bg-ember mx-auto rounded-full"></div>
+            </div>
+
+            <!-- UNIFIED GRID: No emphasis on center card via transform -->
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+                
+                <!-- SPARK BOX -->
+                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group">
+                    <div class="mb-10 relative h-40 flex items-center justify-center">
+                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#F0F0F0" stroke="#DDD" stroke-width="1.5"/>
+                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#CCC" stroke-width="1.5"/>
+                            <path d="M50 85V50" stroke="#CCC" stroke-width="1.5"/>
+                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#333" text-anchor="middle">?</text>
+                        </svg>
+                        <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-black text-white uppercase tracking-wide">Spark</h3>
+                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Iniciación</p>
+                    </div>
+                    
+                    <div class="flex justify-center items-baseline gap-1 mb-8">
+                        <span class="text-3xl font-bold text-white">$36</span>
+                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                    </div>
+
+                    <ul class="space-y-4 mb-10 flex-1 px-2" id="spark-bullets">
+                        <!-- JS -->
+                    </ul>
+
+                    <button onclick="window.open('https://buy.stripe.com/test_6oUdR2f5Rdqh7XUeuLaMU02', '_blank')" class="w-full py-3.5 bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors rounded-sm">
+                        Elegir Spark
+                    </button>
                 </div>
-                <div>
-                    <div class="text-white font-bold text-lg tracking-wide">Ignation Box</div>
-                    <div class="text-xs text-white/40">© 2024 ignationbox.com</div>
+
+                <!-- FLAME BOX (Uniform Size) -->
+                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group border-ember/30">
+                    <!-- Badge inside card to keep uniformity -->
+                    <div class="absolute top-4 right-4 bg-ember/10 text-ember border border-ember/20 text-[9px] font-bold px-2 py-1 uppercase tracking-widest rounded-sm">Popular</div>
+                    
+                    <div class="mb-10 relative h-40 flex items-center justify-center">
+                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#FF5A1F" stroke="#E04006" stroke-width="1.5"/>
+                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#FF8C60" stroke-width="1.5"/>
+                            <path d="M50 85V50" stroke="#FF8C60" stroke-width="1.5"/>
+                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="white" text-anchor="middle">?</text>
+                        </svg>
+                        <div class="absolute inset-0 bg-ember/10 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-black text-ember uppercase tracking-wide">Flame</h3>
+                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Experiencia Completa</p>
+                    </div>
+
+                    <div class="flex justify-center items-baseline gap-1 mb-8">
+                        <span class="text-3xl font-bold text-white">$50</span>
+                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                    </div>
+
+                    <ul class="space-y-4 mb-10 flex-1 px-2" id="flame-bullets">
+                        <!-- JS -->
+                    </ul>
+
+                    <button onclick="window.open('https://buy.stripe.com/test_4gM3cobTF4TLba6gCTaMU01', '_blank')" class="w-full py-3.5 btn-primary font-bold text-xs uppercase tracking-widest rounded-sm shadow-lg">
+                        Elegir Flame
+                    </button>
+                </div>
+
+                <!-- LAVA BOX -->
+                <div class="plan-card rounded-xl p-8 flex flex-col relative overflow-hidden group">
+                    <div class="mb-10 relative h-40 flex items-center justify-center">
+                        <svg class="mystery-box w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 85L15 65V35L50 15L85 35V65L50 85Z" fill="#1A1A1A" stroke="#333" stroke-width="1.5"/>
+                            <path d="M50 15V50M85 35L50 50L15 35" stroke="#333" stroke-width="1.5"/>
+                            <path d="M50 85V50" stroke="#333" stroke-width="1.5"/>
+                            <text x="50" y="68" font-family="Montserrat" font-weight="900" font-size="24" fill="#FF5A1F" text-anchor="middle">?</text>
+                        </svg>
+                        <div class="absolute inset-0 bg-white/5 blur-2xl -z-10 rounded-full scale-75 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-black text-white uppercase tracking-wide">Lava</h3>
+                        <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Edición Limitada</p>
+                    </div>
+
+                    <div class="flex justify-center items-baseline gap-1 mb-8">
+                        <span class="text-3xl font-bold text-white">$99</span>
+                        <span class="text-xs text-gray-500 font-bold">/ MES</span>
+                    </div>
+
+                    <ul class="space-y-4 mb-10 flex-1 px-2" id="lava-bullets">
+                        <!-- JS -->
+                    </ul>
+
+                    <button onclick="window.open('https://buy.stripe.com/test_6oU6oA5vhcmdguq2M3aMU00', '_blank')" class="w-full py-3.5 bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-xs uppercase tracking-widest transition-all rounded-sm">
+                        Elegir Lava
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS (Minimal) -->
+    <section id="how" class="py-24 px-6 border-t border-white/5 bg-[#0D0D0F]">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-2xl font-black text-white mb-16 uppercase tracking-widest text-center" data-i18n="how.title">El Proceso</h2>
+            
+            <div class="grid md:grid-cols-3 gap-12 text-center relative">
+                <!-- Line Connector -->
+                <div class="hidden md:block absolute top-8 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center group relative z-10">
+                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
+                        <i data-lucide="mouse-pointer-click" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.0.t">Elige tu caja</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.0.p">Spark, Flame o Lava. Tú decides la intensidad.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center group relative z-10">
+                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
+                        <i data-lucide="truck" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.1.t">Envío Rápido</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.1.p">Directo a tu puerta, sin complicaciones.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center group relative z-10">
+                    <div class="w-16 h-16 bg-[#161618] rounded-full flex items-center justify-center mb-8 border border-white/10 group-hover:border-ember transition-colors shadow-xl">
+                        <i data-lucide="flame" class="h-6 w-6 text-gray-400 group-hover:text-ember transition-colors"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3" data-i18n="how.steps.2.t">Enciende</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed max-w-[200px]" data-i18n="how.steps.2.p">Descubre sabores únicos y mejora tu técnica.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- INCLUDES GRID (Clean) -->
+    <section class="py-20 px-6 border-t border-white/5 bg-[#0F0F11]">
+        <div class="max-w-4xl mx-auto">
+             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="includes-grid">
+                <!-- Populated by JS -->
+             </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / EMAIL -->
+    <footer class="bg-[#050505] py-20 px-6 border-t border-white/5">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-[0.2em]" data-i18n="email.title">Únete al Club</h3>
+            <p class="text-gray-500 mb-10 text-sm font-light">Recibe alertas de drops limitados y recetas exclusivas.</p>
             
-            <div class="flex items-center gap-6 text-sm text-white/40">
-                <span class="cursor-default hover:text-white/60 transition-colors" data-i18n="legal.terms">Terms</span>
-                <span class="cursor-default hover:text-white/60 transition-colors" data-i18n="legal.privacy">Privacy</span>
-                <span class="cursor-default hover:text-white/60 transition-colors" data-i18n="legal.refunds">Refunds</span>
+            <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-20">
+                <input type="email" id="email-input" placeholder="Tu email" class="flex-1 bg-[#161618] border border-white/10 text-white px-5 py-3 rounded-sm outline-none focus:border-ember transition-colors text-sm placeholder:text-gray-600">
+                <button id="email-btn" class="bg-white text-black px-8 py-3 font-bold text-xs uppercase tracking-widest rounded-sm hover:bg-gray-200 transition-colors">Enviar</button>
             </div>
-            
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 text-xs text-white/30">
-                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span>System Operational</span>
+            <div id="email-success" class="hidden text-ember font-bold mb-8 text-sm tracking-widest">¡REGISTRADO!</div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/5 pt-10">
+                <div class="opacity-40 hover:opacity-100 transition-opacity">
+                    <img src="ChatGPT Image Feb 3, 2026, 03_38_19 PM.png" alt="Logo" class="h-6 w-auto grayscale">
+                </div>
+                <div class="flex gap-8 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+                    <a href="#" class="hover:text-white transition-colors" data-i18n="legal.terms">Términos</a>
+                    <a href="#" class="hover:text-white transition-colors" data-i18n="legal.privacy">Privacidad</a>
+                </div>
+                <div class="text-[10px] text-gray-700 font-mono">
+                    EST. 2026
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Sticky Bar -->
-    <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden pb-6 pointer-events-none">
-        <div class="px-4 pointer-events-auto">
-            <div class="rounded-xl bg-[#1A1F26] border border-white/10 p-3 shadow-2xl flex items-center justify-between ring-1 ring-white/5">
-                <div class="text-sm text-white pl-1">
-                    <div class="font-bold text-ember2">Ignation Box</div>
-                    <div class="text-xs text-white/50" data-i18n="mobile.sticky">Jerky Misterioso</div>
-                </div>
-                <a href="#boxes" class="inline-flex items-center justify-center rounded-lg h-9 px-4 text-sm font-bold bg-ember hover:bg-ember2 text-white shadow-lg transition-colors" data-i18n="mobile.cta">
-                    Elegir Caja
-                </a>
-            </div>
-        </div>
-    </div>
-
+    <!-- LOGIC -->
     <script>
-        // --- TRANSLATION DATA ---
         const I18N = {
             es: {
-                nav: { boxes: "Cajas", how: "Cómo funciona", what: "Qué incluye", faq: "FAQ", cta: "Comprar" },
+                nav: { boxes: "CAJAS", how: "PROCESO", faq: "FAQ", cta: "SUSCRÍBEME" },
                 hero: {
-                    kicker: "Mystery box mensual para asadores",
-                    h1: "La sorpresa que te da ganas de prender el fuego.",
-                    p: "Cada mes llega una caja curada con carne seca premium, selecciones sorpresa y tips prácticos para cocinar mejor—sin complicar operaciones ni romper la magia.",
-                    cta1: "Ver cajas",
-                    cta2: "Comprar ahora",
-                    trust: ["Pagos seguros", "Envío internacional", "Sorpresa real"],
-                    see_boxes: "Ver cajas"
+                    h1: "EL RITUAL <br> <span class='text-gradient-ember'>DEL FUEGO</span>",
+                    p: "No es solo una caja. Es tu arsenal mensual. Jerky de res premium, salsas que no encuentras en tiendas y herramientas para dominar la parrilla.",
+                    cta1: "VER COLECCIÓN"
                 },
-                card: { title: "Unboxing del mes", badge: "Sorpresa", tags: ["Carne premium", "Selección sorpresa", "Tips de cocina", "Extra útil"] },
-                strips: {
-                    s1: { t: "100% sorpresa", p: "No revelamos el contenido. Tú eliges el nivel de fuego." },
-                    s2: { t: "Tips incluidos", p: "Consejos cortos y útiles para mejorar en cada asado." },
-                    s3: { t: "Fácil de repetir", p: "Formato estándar: simple de armar, simple de enviar." },
-                },
-                pricing: {
-                    title: "Elige tu nivel de fuego",
-                    subtitle: "Misma estructura. Más valor conforme subes de nivel.",
-                    note: "Links de compra en modo TEST.",
-                    buy: "Comprar",
-                    view: "Ver detalles",
-                    popular: "Más popular",
-                    best: "Mejor entrada",
-                    premium: "Premium",
-                },
-                plans: {
-                    spark: { vibe: "La entrada al juego. Sorpresa fácil, rica y sin complicarte.", bullets: ["Carne seca premium", "Selecciones sorpresa", "Tips rápidos", "Un extra útil"] },
-                    flame: { vibe: "Más variedad. Mejor selección. El nivel que se siente mes a mes.", bullets: ["Más jerky / mejor selección", "Más sorpresa", "Tips para subir de nivel", "Upgrade funcional"] },
-                    lava: { vibe: "Edición premium. Menos explicación, más impacto.", bullets: ["Jerky gourmet", "Selecciones exclusivas", "Tips más avanzados", "Extra premium"] }
-                },
+                pricing: { title: "TU NIVEL DE INTENSIDAD" },
                 how: {
-                    title: "Cómo funciona",
+                    title: "EL PROCESO",
                     steps: [
-                        { t: "Elige tu caja", p: "Spark, Flame o Lava. Tú decides qué tan intensa quieres la sorpresa." },
-                        { t: "Recíbela", p: "Empacada para enviar fácil y llegar sin complicaciones." },
-                        { t: "Cocina y presume", p: "Aplica los tips, prende el fuego y comparte tu resultado." },
+                        { t: "ELIGE TU CAJA", p: "Spark, Flame o Lava. Tú decides la intensidad." },
+                        { t: "ENVÍO RÁPIDO", p: "Directo a tu puerta, sin complicaciones." },
+                        { t: "ENCIENDE", p: "Descubre sabores únicos y mejora tu técnica." },
                     ]
                 },
-                gift: { label: "Regalo Perfecto", title: "¿Buscas un regalo único?", desc: "Elige una caja y compra en 1 click. La sorpresa queda perfecta para cualquier asador. Sin suscripciones forzosas.", spark: "Regalar Spark ($36)", flame: "Regalar Flame ($50)", lava: "Regalar Lava ($99)" },
                 includes: {
-                    title: "Qué incluye cada caja",
-                    subtitle: "Sin perecederos. Sin estrés logístico. Solo experiencia curada.",
                     cols: [
-                        { t: "Carne seca premium", p: "El corazón de la caja. Siempre jerky (gourmet o clásico según el nivel).", icon: "flame" },
-                        { t: "Selecciones sorpresa", p: "Sabores, combos y hallazgos que cambian cada mes.", icon: "gift" },
-                        { t: "Tips para cocinar", p: "Guías rápidas: cómo usar, cuándo aplicar, y cómo mejorar tu resultado.", icon: "badge-check" },
-                        { t: "Algo útil", p: "Un extra funcional para el asador (simple, ligero y útil).", icon: "box" }
-                    ],
-                    std: { title: "Estándar operativo", desc: "Mismo formato siempre. Cambia la selección, no la logística." },
-                    tag1: "No perecederos", tag2: "Ligero", tag3: "Fácil de empacar"
-                },
-                faq: {
-                    title: "Preguntas frecuentes",
-                    items: [
-                        { q: "¿Qué tipo de carne viene?", a: "Siempre carne seca (jerky). Es lo que nos permite enviar fácil y mantener la calidad." },
-                        { q: "¿Revelan el contenido?", a: "No. La sorpresa es parte de la experiencia. Solo eliges el nivel de fuego." },
-                        { q: "¿Envían internacionalmente?", a: "Sí. Al ser productos no perecederos, la logística es más simple." },
-                        { q: "¿Puedo comprar una sola vez?", a: "Sí. En esta versión usamos links de compra en modo TEST." },
+                        { t: "Jerky Artesanal", icon: "beef" },
+                        { t: "Salsas de Autor", icon: "droplet" },
+                        { t: "Herramientas", icon: "hammer" },
+                        { t: "Tips & Guías", icon: "book-open" }
                     ]
                 },
-                email: { title: "Recibe el drop", p: "Te avisamos cuando haya nuevo drop y ediciones limitadas.", placeholder: "Tu email", cta: "Unirme", success: "¡Listo! Te avisaremos.", note: "Sin spam." },
-                legal: { terms: "Términos", privacy: "Privacidad", refunds: "Reembolsos" },
-                mobile: { sticky: "Jerky Misterioso", cta: "Elegir Caja" }
+                email: { title: "ÚNETE AL CLUB" },
+                legal: { terms: "TÉRMINOS", privacy: "PRIVACIDAD" },
+                langBtn: { text: "SWITCH TO EN", flag: "🇺🇸", mobile: "ENGLISH" }
             },
             en: {
-                nav: { boxes: "Boxes", how: "How it works", what: "What’s inside", faq: "FAQ", cta: "Shop Boxes" },
+                nav: { boxes: "BOXES", how: "PROCESS", faq: "FAQ", cta: "SUBSCRIBE" },
                 hero: {
-                    kicker: "Monthly mystery box for grillers",
-                    h1: "The surprise that makes you want to light the fire.",
-                    p: "Every month, a curated box with premium jerky, surprise selections, and practical cooking tips—built to stay simple and scalable while keeping the mystery alive.",
-                    cta1: "See boxes",
-                    cta2: "Buy now",
-                    trust: ["Secure payments", "Worldwide shipping", "Real mystery"],
-                    see_boxes: "See boxes"
+                    h1: "THE FIRE <br> <span class='text-gradient-ember'>RITUAL</span>",
+                    p: "It’s not just a box. It’s your monthly arsenal. Premium beef jerky, hard-to-find sauces, and tools to master the grill.",
+                    cta1: "VIEW COLLECTION"
                 },
-                card: { title: "This month’s unboxing", badge: "Mystery", tags: ["Premium jerky", "Surprise picks", "Cooking tips", "Useful extra"] },
-                strips: {
-                    s1: { t: "100% mystery", p: "We don’t reveal the content. You pick the fire level." },
-                    s2: { t: "Tips included", p: "Short, useful guidance to level up every cook." },
-                    s3: { t: "Easy to repeat", p: "A standard format that’s easy to pack and ship." },
-                },
-                pricing: {
-                    title: "Choose your fire level",
-                    subtitle: "Same structure. More value as you level up.",
-                    note: "TEST purchase links.",
-                    buy: "Buy",
-                    view: "View details",
-                    popular: "Most popular",
-                    best: "Best entry",
-                    premium: "Premium",
-                },
-                plans: {
-                    spark: { vibe: "Your entry level. Simple, tasty mystery—no hassle.", bullets: ["Premium jerky", "Surprise selections", "Quick tips", "A useful extra"] },
-                    flame: { vibe: "More variety. Better picks. The tier you feel every month.", bullets: ["More/better jerky selection", "More mystery", "Level-up tips", "Functional upgrade"] },
-                    lava: { vibe: "Premium edition. Less explanation, more impact.", bullets: ["Gourmet jerky", "Exclusive selections", "More advanced tips", "Premium extra"] }
-                },
+                pricing: { title: "YOUR INTENSITY LEVEL" },
                 how: {
-                    title: "How it works",
+                    title: "THE PROCESS",
                     steps: [
-                        { t: "Pick your box", p: "Spark, Flame, or Lava. Choose how intense you want the mystery." },
-                        { t: "Receive it", p: "Packed for simple shipping and smooth delivery." },
-                        { t: "Cook & share", p: "Use the tips, light the fire, and show off your result." },
+                        { t: "PICK YOUR BOX", p: "Spark, Flame, or Lava. You decide the intensity." },
+                        { t: "FAST SHIPPING", p: "Straight to your door, no logistics hassle." },
+                        { t: "IGNITE", p: "Discover unique flavors and improve your craft." },
                     ]
                 },
-                gift: { label: "Perfect Gift", title: "Looking for a unique gift?", desc: "Pick a box and checkout in 1 click. Mystery makes the perfect gift for any griller. No forced subscriptions.", spark: "Gift Spark ($36)", flame: "Gift Flame ($50)", lava: "Gift Lava ($99)" },
                 includes: {
-                    title: "What’s inside each box",
-                    subtitle: "No perishables. No logistics stress. Just curated experience.",
                     cols: [
-                        { t: "Premium jerky", p: "The heart of the box. Always jerky (classic or gourmet by tier).", icon: "flame" },
-                        { t: "Surprise selections", p: "Flavors, combos, and finds that change every month.", icon: "gift" },
-                        { t: "Cooking tips", p: "Quick guides: how to use it, when to apply, and how to improve.", icon: "badge-check" },
-                        { t: "Something useful", p: "A functional add-on for your grilling setup (light + practical).", icon: "box" }
-                    ],
-                    std: { title: "Operational standard", desc: "Same format always. The selection changes, not the logistics." },
-                    tag1: "Non-perishable", tag2: "Lightweight", tag3: "Easy to pack"
-                },
-                faq: {
-                    title: "FAQ",
-                    items: [
-                        { q: "What kind of meat is included?", a: "Always jerky. That’s how we keep shipping simple and quality consistent." },
-                        { q: "Do you reveal the content?", a: "No. The mystery is the experience. You only pick your fire level." },
-                        { q: "Do you ship worldwide?", a: "Yes. Since it’s non-perishable, logistics stay simple." },
-                        { q: "Can I buy once?", a: "Yes. This version uses Stripe TEST purchase links." },
+                        { t: "Artisan Jerky", icon: "beef" },
+                        { t: "Craft Sauces", icon: "droplet" },
+                        { t: "Tools", icon: "hammer" },
+                        { t: "Tips & Guides", icon: "book-open" }
                     ]
                 },
-                email: { title: "Get the drop", p: "Drop alerts + limited editions.", placeholder: "Your email", cta: "Join", success: "You're on the list!", note: "No spam." },
-                legal: { terms: "Terms", privacy: "Privacy", refunds: "Refunds" },
-                mobile: { sticky: "Mystery Jerky", cta: "Choose Box" }
+                email: { title: "JOIN THE CLUB" },
+                legal: { terms: "TERMS", privacy: "PRIVACY" },
+                langBtn: { text: "CAMBIAR A ES", flag: "🇪🇸", mobile: "ESPAÑOL" }
             }
         };
 
-        // --- APP LOGIC ---
+        const PLANS = {
+            es: {
+                spark: ["Jerky de Res Artesanal", "Selección Introductoria", "Guía de Degustación"],
+                flame: ["Jerky Premium Variado", "Salsas BBQ de Autor", "Herramientas Útiles"],
+                lava: ["Jerky Edición Limitada", "Accesorios Pro de Acero", "Regalos Sorpresa Exclusivos"]
+            },
+            en: {
+                spark: ["Artisan Beef Jerky", "Intro Selection", "Tasting Guide"],
+                flame: ["Premium Jerky Variety", "Craft BBQ Sauces", "Useful Tools"],
+                lava: ["Limited Edition Jerky", "Pro Steel Accessories", "Exclusive Surprise Gifts"]
+            }
+        };
+
         let currentLang = 'es';
 
         function updateLang(lang) {
             currentLang = lang;
             const t = I18N[lang];
 
-            // 1. Update simple text elements with data-i18n attributes
+            // Text Elements
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                // Resolve nested keys (e.g. "nav.boxes")
                 const val = key.split('.').reduce((obj, k) => obj && obj[k], t);
-                if (val) el.textContent = val;
+                if (val) el.innerHTML = val;
             });
 
-            // 2. Update arrays/lists manually for complexity
-            
-            // Hero Features
-            const heroFeatures = document.getElementById('hero-features');
-            heroFeatures.innerHTML = t.card.tags.map(tag => `
-                <div class="flex items-center gap-2 text-xs text-white/70">
-                    <i data-lucide="check" class="h-3 w-3 text-ember"></i>
-                    <span>${tag}</span>
-                </div>
-            `).join('');
-
-            // Plan Bullets
+            // Bullets
             const renderBullets = (id, bullets) => {
                 document.getElementById(id).innerHTML = bullets.map(b => `
-                    <div class="flex gap-3 text-sm text-white/80">
-                        <i data-lucide="check" class="h-5 w-5 text-ember shrink-0"></i>
+                    <li class="flex items-start gap-3 text-[13px] text-gray-400 font-light">
+                        <i data-lucide="check" class="h-4 w-4 text-ember shrink-0 mt-0.5"></i>
                         <span>${b}</span>
-                    </div>
+                    </li>
                 `).join('');
             };
-            renderBullets('spark-bullets', t.plans.spark.bullets);
-            renderBullets('flame-bullets', t.plans.flame.bullets);
-            renderBullets('lava-bullets', t.plans.lava.bullets);
+            renderBullets('spark-bullets', PLANS[lang].spark);
+            renderBullets('flame-bullets', PLANS[lang].flame);
+            renderBullets('lava-bullets', PLANS[lang].lava);
 
             // Includes Grid
             const includesGrid = document.getElementById('includes-grid');
-            includesGrid.innerHTML = t.includes.cols.map((col, i) => `
-                <div class="rounded-xl border border-white/10 bg-[#131820] p-6 hover:border-ember/50 transition-colors group">
-                    <div class="mb-4 h-10 w-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-ember group-hover:text-white transition-colors text-white/70">
-                        <i data-lucide="${col.icon}" class="h-6 w-6"></i>
-                    </div>
-                    <h3 class="font-semibold leading-none tracking-tight text-lg">${col.t}</h3>
-                    <p class="text-sm text-muted-foreground text-white/60 mt-2 text-base">${col.p}</p>
+            includesGrid.innerHTML = t.includes.cols.map(col => `
+                <div class="bg-[#161618] border border-white/5 p-5 rounded-sm text-center flex flex-col items-center justify-center gap-3 hover:border-white/10 transition-colors">
+                    <i data-lucide="${col.icon}" class="h-5 w-5 text-ember opacity-80"></i>
+                    <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest">${col.t}</span>
                 </div>
             `).join('');
 
-            // FAQ Grid
-            const faqGrid = document.getElementById('faq-grid');
-            faqGrid.innerHTML = t.faq.items.map(item => `
-                <div class="rounded-xl border border-white/10 bg-white/5 p-6 hover:bg-white/[0.08] transition-colors">
-                    <h3 class="font-semibold leading-none tracking-tight text-lg leading-snug">${item.q}</h3>
-                    <p class="text-sm text-muted-foreground text-white/60 mt-3 text-base leading-relaxed">${item.a}</p>
-                </div>
-            `).join('');
+            // Buttons
+            const desktopBtn = document.getElementById('lang-toggle-desktop');
+            desktopBtn.innerHTML = `<span class="text-lg leading-none">${t.langBtn.flag}</span><span class="text-[10px] font-bold text-white/80 tracking-wide">${t.langBtn.text.split(' ')[2] || 'EN'}</span>`;
+            
+            const mobileBtn = document.getElementById('lang-toggle-mobile');
+            mobileBtn.innerHTML = `<span class="text-xl">${t.langBtn.flag}</span><span class="text-xs font-bold text-white tracking-widest">${t.langBtn.mobile}</span>`;
 
-            // Placeholder inputs
-            document.getElementById('email-input').placeholder = t.email.placeholder;
-
-            // Buttons State
-            const btnText = lang === 'es' ? 'EN' : 'ES';
-            const btnTextMobile = lang === 'es' ? 'Switch to English' : 'Cambiar a Español';
-            document.getElementById('lang-toggle-desktop').textContent = btnText;
-            document.getElementById('lang-toggle-mobile').textContent = btnTextMobile;
-
-            // Re-init icons for new elements
             lucide.createIcons();
         }
 
-        // --- EVENT LISTENERS ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial Render
             updateLang('es');
-            lucide.createIcons();
 
-            // Language Toggles
-            document.getElementById('lang-toggle-desktop').addEventListener('click', () => {
-                updateLang(currentLang === 'es' ? 'en' : 'es');
-            });
-            document.getElementById('lang-toggle-mobile').addEventListener('click', () => {
-                updateLang(currentLang === 'es' ? 'en' : 'es');
-            });
-
-            // Mobile Menu
-            const mobileBtn = document.getElementById('mobile-menu-btn');
+            document.getElementById('lang-toggle-desktop').addEventListener('click', () => updateLang(currentLang === 'es' ? 'en' : 'es'));
+            document.getElementById('lang-toggle-mobile').addEventListener('click', () => updateLang(currentLang === 'es' ? 'en' : 'es'));
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            // Close menu on link click
-            document.querySelectorAll('.mobile-link').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-            });
-
-            // Email Capture
-            const emailBtn = document.getElementById('email-btn');
-            emailBtn.addEventListener('click', () => {
+            mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            
+            // Email
+            document.getElementById('email-btn').addEventListener('click', () => {
                 const input = document.getElementById('email-input');
-                if (input.value) {
-                    document.getElementById('email-form').classList.add('hidden');
-                    document.getElementById('email-success').classList.remove('hidden');
-                    document.getElementById('email-success').classList.add('inline-flex');
-                }
+                if(input.value) document.getElementById('email-success').classList.remove('hidden');
             });
-
-            // Scroll Animation Observer
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
     </script>
 </body>
